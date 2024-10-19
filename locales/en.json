@@ -1,0 +1,11 @@
+{
+  "askMeAnything": "Ask me anything",
+  "submit": "Submit",
+  "poweredBy": "A fast, open-source voice assistant powered by {groq}, {cartesia}, {vad}, and {vercel}.",
+  "learnMore": "Learn more",
+  "loadingSpeechDetection": "Loading speech detection...",
+  "failedToLoadSpeechDetection": "Failed to load speech detection.",
+  "startTalkingToChat": "Start talking to chat.",
+  "tooManyRequests": "Too many requests. Please try again later.",
+  "errorOccurred": "An error occurred."
+}

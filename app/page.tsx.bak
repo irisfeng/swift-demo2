@@ -7,7 +7,6 @@ import { EnterIcon, LoadingIcon } from "@/lib/icons";
 import { usePlayer } from "@/lib/usePlayer";
 import { track } from "@vercel/analytics";
 import { useMicVAD, utils } from "@ricky0123/vad-react";
-import { useIntl } from 'react-intl';
 
 type Message = {
 	role: "user" | "assistant";
@@ -16,7 +15,6 @@ type Message = {
 };
 
 export default function Home() {
-	const intl = useIntl();
 	const [input, setInput] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const player = usePlayer();
@@ -61,7 +59,7 @@ export default function Home() {
 
 		window.addEventListener("keydown", keyDown);
 		return () => window.removeEventListener("keydown", keyDown);
-	}, []);
+	});
 
 	const [messages, submit, isPending] = useActionState<
 		Array<Message>,
@@ -97,9 +95,9 @@ export default function Home() {
 
 		if (!response.ok || !transcript || !text || !response.body) {
 			if (response.status === 429) {
-				toast.error(intl.formatMessage({ id: 'tooManyRequests' }));
+				toast.error("Too many requests. Please try again later.");
 			} else {
-				toast.error(intl.formatMessage({ id: 'errorOccurred' }));
+				toast.error((await response.text()) || "An error occurred.");
 			}
 
 			return prevMessages;
@@ -143,7 +141,7 @@ export default function Home() {
 					type="text"
 					className="bg-transparent focus:outline-none p-4 w-full placeholder:text-neutral-600 dark:placeholder:text-neutral-400"
 					required
-					placeholder={intl.formatMessage({ id: 'askMeAnything' })}
+					placeholder="Ask me anything"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					ref={inputRef}
@@ -153,7 +151,7 @@ export default function Home() {
 					type="submit"
 					className="p-4 text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white"
 					disabled={isPending}
-					aria-label={intl.formatMessage({ id: 'submit' })}
+					aria-label="Submit"
 				>
 					{isPending ? <LoadingIcon /> : <EnterIcon />}
 				</button>
@@ -173,30 +171,26 @@ export default function Home() {
 				{messages.length === 0 && (
 					<>
 						<p>
-							{intl.formatMessage(
-								{ id: 'poweredBy' },
-								{
-									groq: <A href="https://groq.com">Groq</A>,
-									cartesia: <A href="https://cartesia.ai">Cartesia</A>,
-									vad: <A href="https://www.vad.ricky0123.com/">VAD</A>,
-									vercel: <A href="https://vercel.com">Vercel</A>,
-								}
-							)}{" "}
+							A fast, open-source voice assistant powered by{" "}
+							<A href="https://groq.com">Groq</A>,{" "}
+							<A href="https://cartesia.ai">Cartesia</A>,{" "}
+							<A href="https://www.vad.ricky0123.com/">VAD</A>,
+							and <A href="https://vercel.com">Vercel</A>.{" "}
 							<A
 								href="https://github.com/irisfeng/swift-demo2"
 								target="_blank"
 							>
-								{intl.formatMessage({ id: 'learnMore' })}
+								Learn more
 							</A>
 							.
 						</p>
 
 						{vad.loading ? (
-							<p>{intl.formatMessage({ id: 'loadingSpeechDetection' })}</p>
+							<p>Loading speech detection...</p>
 						) : vad.errored ? (
-							<p>{intl.formatMessage({ id: 'failedToLoadSpeechDetection' })}</p>
+							<p>Failed to load speech detection.</p>
 						) : (
-							<p>{intl.formatMessage({ id: 'startTalkingToChat' })}</p>
+							<p>Start talking to chat.</p>
 						)}
 					</>
 				)}
@@ -217,7 +211,7 @@ export default function Home() {
 	);
 }
 
-function A(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+function A(props: any) {
 	return (
 		<a
 			{...props}

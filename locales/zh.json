@@ -1,0 +1,11 @@
+{
+  "askMeAnything": "问我任何问题",
+  "submit": "提交",
+  "poweredBy": "一个由 {groq}、{cartesia}、{vad} 和 {vercel} 驱动的快速开源语音助手。",
+  "learnMore": "了解更多",
+  "loadingSpeechDetection": "正在加载语音检测...",
+  "failedToLoadSpeechDetection": "加载语音检测失败。",
+  "startTalkingToChat": "开始对话。",
+  "tooManyRequests": "请求过多。请稍后再试。",
+  "errorOccurred": "发生错误。"
+}
